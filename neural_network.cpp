@@ -56,7 +56,7 @@ void NeuralNetwork::fit(void)
 
                 if (perceptron.activation == "step")
                 {
-                    if (sum > 1.5)
+                    if (sum > 1.5) //Threshold
                     {
                         perceptron.output = 1;
                     }
