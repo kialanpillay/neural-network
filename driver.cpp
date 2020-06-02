@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
     float learning_rate = 0.1;
     int layers = 2;
     NeuralNetwork nn(train, test, learning_rate, layers);
+    nn.fit();
     ofstream out("output.txt");
     out.close();
     return 0;

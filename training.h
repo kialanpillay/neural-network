@@ -9,6 +9,7 @@ namespace PLLKIA010
     class Training
     {
     public:
+        friend class NeuralNetwork;
         Training(void);
         Training(const std::vector<float> & labels, const std::vector<Input> & input);
 

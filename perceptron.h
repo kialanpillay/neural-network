@@ -8,13 +8,14 @@ namespace PLLKIA010
     class Perceptron
     {
     public:
+        friend class NeuralNetwork;
         Perceptron(void);
-        Perceptron(std::string & activation, std::vector<float> & weights, std::vector<float> & input);
+        Perceptron(std::string activation, std::vector<float> & weights);
+        void activationFunction(std::vector<float> & input);
 
     private:
         std::string activation;
         std::vector<float> weights;
-        std::vector<float> input;
         Input x;
         float output;
     };

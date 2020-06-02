@@ -9,6 +9,8 @@ namespace PLLKIA010
     class Input
     {
     public:
+        friend class NeuralNetwork;
+        friend class Perceptron;
         Input(void);
         Input(const std::vector<float> &input);
 
