@@ -76,11 +76,6 @@ void NeuralNetwork::fit(void)
                                std::plus<float>());
             }
         }
-        for (auto w : model[0][0].weights)
-        {
-            //std::cout << w << " ";
-        }
-        //std::cout << std::endl << std::endl;
     }
 }
 
@@ -95,7 +90,7 @@ void NeuralNetwork::evaluate(void)
         float sum = std::accumulate(linear.begin(), linear.end(), 0.0);
         if (sum > 1.5)
         {
-            std::cout << "Prediction: " << 1;
+            std::cout << "Prediction: " << 1 << std::endl;
         }
         else
         {
