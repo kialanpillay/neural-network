@@ -12,8 +12,11 @@ NeuralNetwork::NeuralNetwork(void) {}
 
 NeuralNetwork::NeuralNetwork(const Training &train, const std::vector<Input> &test, const float r, const int l) : training_data(train), test_data(test), learning_rate(r), layers(l)
 {
-    for (int i = 0; i < layers; ++i)
+    
+    for (int i = 0; i < l; ++i)
     {
+        std::vector<Perceptron> layer;
+        model.push_back(layer);
         std::vector<float> weights;
         for (int w = 0; w < 2; ++w)
         {

@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     int layers = 2;
     NeuralNetwork nn(train, test, learning_rate, layers);
     nn.fit();
-    ofstream out("output.txt");
-    out.close();
+    //ofstream out("output.txt");
+    //out.close();
     return 0;
 }
