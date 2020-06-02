@@ -18,10 +18,10 @@ namespace PLLKIA010
         void predict();
     private:
         Training training_data;
+        std::vector<Input> test_data;
         float learning_rate;
         int layers;
         std::vector<std::vector<Perceptron>> model;
-        std::vector<Input> test_data;
 
     };
     std::ostream &operator<<(std::ostream &os, const NeuralNetwork &nn);

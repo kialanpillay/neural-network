@@ -1,5 +1,6 @@
 #ifndef PERCEPTRON_H
 #define PERCEPTRON_H
+#include "input.h"
 #include <string>
 #include <vector>
 
