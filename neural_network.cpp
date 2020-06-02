@@ -38,6 +38,18 @@ NeuralNetwork::NeuralNetwork(const Training &train, const std::vector<Input> &te
     }
 }
 
+int step(float x, float threshold)
+{
+    if (x > threshold)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 void NeuralNetwork::fit(void)
 {
     for (int k = 0; k < 10; ++k)
@@ -56,14 +68,7 @@ void NeuralNetwork::fit(void)
 
                 if (perceptron.activation == "step")
                 {
-                    if (sum > 1.5) //Threshold
-                    {
-                        perceptron.output = 1;
-                    }
-                    else
-                    {
-                        perceptron.output = 0;
-                    }
+                    perceptron.output = step(sum, 1.5);
                 }
                 float t = training_data.train_labels[m];
                 float o = perceptron.output;
