@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <iomanip>
+#include <math.h>
 
 using namespace PLLKIA010;
 
@@ -49,6 +50,11 @@ int step(float x, float threshold)
     {
         return 0;
     }
+}
+
+float sigmoid(float x)
+{
+    return 1 / (1 + exp(-x));
 }
 
 void NeuralNetwork::fit(void)
