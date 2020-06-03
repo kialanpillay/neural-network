@@ -114,7 +114,7 @@ void NeuralNetwork::fit(void)
             float sum = std::accumulate(linear.begin(), linear.end(), 0.0);
             if (model[1].layer[0].activation == "step")
             {
-                model[1].layer[0].output = step(sum, 1.5);
+                model[1].layer[0].output = step(sum, 1);
             }
             float t = train.train_labels[m];
             float o = model[1].layer[0].output;
