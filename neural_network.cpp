@@ -12,7 +12,7 @@ using namespace PLLKIA010;
 
 NeuralNetwork::NeuralNetwork(void) {}
 
-NeuralNetwork::NeuralNetwork(const Data &train, const Data &test, const float r, const int l) : train(train), test(test), learning_rate(r), layers(l)
+NeuralNetwork::NeuralNetwork(const Data &train, const Data &test, const float r, const int l, const std::vector<float> &b) : train(train), test(test), learning_rate(r), layers(l), bias(b)
 {
     srand(unsigned(time(0)));
     for (int i = 0; i < l; ++i)
@@ -20,7 +20,7 @@ NeuralNetwork::NeuralNetwork(const Data &train, const Data &test, const float r,
         Layer layer;
         model.push_back(layer);
         std::vector<float> weights;
-        
+
         float r = float(rand()) / float(RAND_MAX);
         for (int w = 0; w < 2; ++w)
         {
@@ -36,6 +36,29 @@ NeuralNetwork::NeuralNetwork(const Data &train, const Data &test, const float r,
         {
             model[i].compose(Perceptron("step", weights));
             model[i].compose(Perceptron("step", weights)); //2-Node Hidden Layer
+        }
+    }
+}
+
+NeuralNetwork::NeuralNetwork(const Data &train, const Data &test, const float r, const int l, const std::vector<float> &b, const std::vector<std::vector<float>> &w) : train(train), test(test), learning_rate(r), layers(l), bias(b)
+{
+    std::vector<std::vector<float>> weight_matrix = w;
+    int c = 0;
+    for (int i = 0; i < l; ++i)
+    {
+        Layer layer;
+        std::vector<float> weights = weight_matrix[c];
+        model.push_back(layer);
+        if (i == l - 1)
+        {
+            model[i].compose(Perceptron("step", weights)); //Output Layer
+            c++;
+        }
+        else
+        {
+            model[i].compose(Perceptron("step", weights));
+            model[i].compose(Perceptron("step", weights)); //2-Node Hidden Layer
+            c += 2;
         }
     }
 }
