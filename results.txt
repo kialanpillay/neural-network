@@ -14,7 +14,7 @@ Output Layer - 1 Node
 
 3 Perceptrons Minumum.
 XOR can be decomposed into AND(OR,NAND).
-Each Perceptron Functions as a Basic Logic Gate.
+Each Perceptron is a Basic Logic Gate.
 Output Layer Perceptron - AND
 
 Question 2
