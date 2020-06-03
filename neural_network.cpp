@@ -5,6 +5,7 @@
 #include <numeric>
 #include <cstdlib>
 #include <ctime>
+#include <iomanip>
 
 using namespace PLLKIA010;
 
@@ -163,8 +164,8 @@ void NeuralNetwork::evaluate(void)
         {
             prediction = step(sum, 1);
         }
-
-        std::cout << "[" << test.train_input[i].x[0] << ", " << test.train_input[i].x[1] << "] - "
+        std::cout << std::setprecision(1) << std::fixed;
+        std::cout << "[" << test.train_input[i].x[0] << ", " << test.train_input[i].x[1] << "] - " << std::setprecision(0) << std::fixed
                   << "Prediction: " << prediction << std::endl;
         predicted.push_back(prediction);
     }
@@ -177,5 +178,5 @@ void NeuralNetwork::evaluate(void)
             true_positive++;
         }
     }
-    std::cout << "Accuracy: " << true_positive / test.train_labels.size() * 100 << "%" << std::endl;
+    std::cout << "\n2-Layer (XOR) Neural Network Accuracy: " << true_positive / test.train_labels.size() * 100 << "%" << std::endl;
 }
