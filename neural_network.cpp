@@ -40,7 +40,7 @@ NeuralNetwork::NeuralNetwork(const Data &train, const Data &test, const float r,
     }
 }
 
-NeuralNetwork::NeuralNetwork(const Data &train, const Data &test, const float r, const int l, const std::vector<float> &b, const std::vector<std::vector<float>> &w) : train(train), test(test), learning_rate(r), layers(l), bias(b)
+NeuralNetwork::NeuralNetwork(const Data &test, const float r, const int l, const std::vector<float> &b, const std::vector<std::vector<float>> &w) : test(test), learning_rate(r), layers(l), bias(b)
 {
     std::vector<std::vector<float>> weight_matrix = w;
     int c = 0;
@@ -53,7 +53,6 @@ NeuralNetwork::NeuralNetwork(const Data &train, const Data &test, const float r,
         {
             weights = weight_matrix[c];
             model[i].compose(Perceptron("step", weights)); //Output Layer
-
         }
         else
         {
@@ -104,6 +103,10 @@ void NeuralNetwork::fit(void)
                 {
                     perceptron.output = step(sum, 0);
                 }
+                else if (perceptron.activation == "sigmoid")
+                {
+                    perceptron.output = sigmoid(sum);
+                }
                 float t = train.train_labels[m];
                 float o = perceptron.output;
                 float rate = learning_rate;
@@ -135,8 +138,12 @@ void NeuralNetwork::fit(void)
                 if (perceptron.activation == "step")
                 {
                     perceptron.output = step(sum, 0);
-                    h.push_back(perceptron.output);
                 }
+                else if (perceptron.activation == "sigmoid")
+                {
+                    perceptron.output = sigmoid(sum);
+                }
+                h.push_back(perceptron.output);
                 c++;
             }
             std::vector<float> linear;
@@ -159,21 +166,6 @@ void NeuralNetwork::fit(void)
                            std::plus<float>());
         }
     }
-    for (auto w : model[0].layer[0].weights)
-    {
-        std::cout << w << " ";
-    }
-    std::cout << "\n";
-    for (auto w : model[0].layer[1].weights)
-    {
-        std::cout << w << " ";
-    }
-    std::cout << "\n";
-    for (auto w : model[1].layer[0].weights)
-    {
-        std::cout << w << " ";
-    }
-    std::cout << "\n";
 }
 
 void NeuralNetwork::evaluate(void)
@@ -196,8 +188,12 @@ void NeuralNetwork::evaluate(void)
             if (perceptron.activation == "step")
             {
                 perceptron.output = step(sum, 0);
-                h.push_back(perceptron.output);
             }
+            else if (perceptron.activation == "sigmoid")
+            {
+                perceptron.output = sigmoid(sum);
+            }
+            h.push_back(perceptron.output);
             c++;
         }
         std::vector<float> linear;
