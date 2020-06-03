@@ -170,6 +170,7 @@ void NeuralNetwork::fit(void)
 void NeuralNetwork::evaluate(void)
 {
     std::cout << "Neural Network Evaluation - Test Data" << std::endl;
+    std::cout << "-------------------------------------" << std::endl;
     std::vector<float> predicted;
     std::vector<float> h; //Output of Hidden Layer
     int c = 0;
@@ -226,7 +227,7 @@ void NeuralNetwork::evaluate(void)
         }
         SSE += pow((predicted[i] - test.train_labels[i]), 2);
     }
-    std::cout << "\nNeural Network Accuracy: " << true_positive / test.train_labels.size() * 100 << "%" << std::endl;
+    std::cout << std::endl << "Neural Network Accuracy: " << true_positive / test.train_labels.size() * 100 << "%" << std::endl;
     float MSE = SSE / test.train_labels.size();
     std::cout << "Mean Squared Error (MSE): " << MSE << std::endl;
     if (predicted.size() == 1)
@@ -241,7 +242,6 @@ void NeuralNetwork::evaluate(void)
     }
     else
     {
-        std::cout << std::endl
-                  << std::endl;
+        std::cout << "=====================================" << std::endl << std::endl;
     }
 }
