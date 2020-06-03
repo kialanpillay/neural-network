@@ -52,7 +52,7 @@ NeuralNetwork::NeuralNetwork(const Data &test, const float r, const int l, const
         if (i == l - 1)
         {
             weights = weight_matrix[c];
-            model[i].compose(Perceptron("step", weights)); //Output Layer
+            model[i].compose(Perceptron("sigmoid", weights)); //Output Layer
         }
         else
         {
@@ -60,7 +60,7 @@ NeuralNetwork::NeuralNetwork(const Data &test, const float r, const int l, const
             for (int j = 0; j < 2; ++j)
             {
                 weights = weight_matrix[c++];
-                model[i].compose(Perceptron("step", weights));
+                model[i].compose(Perceptron("sigmoid", weights));
             }
         }
     }
@@ -85,8 +85,7 @@ float sigmoid(float x)
 
 void NeuralNetwork::fit(void)
 {
-    std::vector<float> bias = {0, 1}; //Hidden Layer Bias
-    int c = 0;                        //Counter
+    int c = 0; //Counter
     for (auto &perceptron : model[0].layer)
     {
         for (int k = 0; k < 10; ++k)
@@ -150,7 +149,7 @@ void NeuralNetwork::fit(void)
             std::transform(model[1].layer[0].weights.begin(), model[1].layer[0].weights.end(),
                            h.begin(), std::back_inserter(linear),
                            std::multiplies<float>());
-            float sum = std::accumulate(linear.begin(), linear.end(), 0.0);
+            float sum = bias[c] + std::accumulate(linear.begin(), linear.end(), 0.0);
             if (model[1].layer[0].activation == "step")
             {
                 model[1].layer[0].output = step(sum, 1);
@@ -170,13 +169,13 @@ void NeuralNetwork::fit(void)
 
 void NeuralNetwork::evaluate(void)
 {
-    std::vector<float> bias = {0, 1}; //Hidden Layer Bias
+    std::cout << "Neural Network Evaluation - Test Data" << std::endl;
     std::vector<float> predicted;
-
+    int c = 0;
     for (int i = 0; i < int(test.train_input.size()); ++i)
     {
-        int c = 0;
-        std::vector<float> x = train.train_input[i].x;
+        c = 0;
+        std::vector<float> x = test.train_input[i].x;
         std::vector<float> h; //Output of Hidden Layer
         for (auto &perceptron : model[0].layer)
         {
@@ -200,14 +199,18 @@ void NeuralNetwork::evaluate(void)
         std::transform(model[1].layer[0].weights.begin(), model[1].layer[0].weights.end(),
                        h.begin(), std::back_inserter(linear),
                        std::multiplies<float>());
-        float sum = std::accumulate(linear.begin(), linear.end(), 0.0);
-        float prediction = 0.0;
+        float sum = bias[c] + std::accumulate(linear.begin(), linear.end(), 0.0);
         if (model[1].layer[0].activation == "step")
         {
-            prediction = step(sum, 1);
+            model[1].layer[0].output = step(sum, 1);
         }
-        std::cout << std::setprecision(1) << std::fixed;
-        std::cout << "[" << test.train_input[i].x[0] << ", " << test.train_input[i].x[1] << "] - " << std::setprecision(0) << std::fixed
+        else if (model[1].layer[0].activation == "sigmoid")
+        {
+            model[1].layer[0].output = sigmoid(sum);
+        }
+        float prediction = model[1].layer[0].output;
+        std::cout << std::setprecision(2) << std::fixed;
+        std::cout << "[" << test.train_input[i].x[0] << ", " << test.train_input[i].x[1] << "] - "
                   << "Prediction: " << prediction << std::endl;
         predicted.push_back(prediction);
     }
@@ -220,5 +223,5 @@ void NeuralNetwork::evaluate(void)
             true_positive++;
         }
     }
-    std::cout << "\n2-Layer (XOR) Neural Network Accuracy: " << true_positive / test.train_labels.size() * 100 << "%" << std::endl;
+    std::cout << "\nNeural Network Accuracy: " << true_positive / test.train_labels.size() * 100 << "%" << std::endl << std::endl;
 }
