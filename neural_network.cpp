@@ -177,7 +177,7 @@ void NeuralNetwork::evaluate(void)
     {
         c = 0;
         std::vector<float> x = test.train_input[i].x;
-        h.clear(); 
+        h.clear();
         for (auto &perceptron : model[0].layer)
         {
             std::vector<float> linear;
@@ -217,26 +217,31 @@ void NeuralNetwork::evaluate(void)
     }
 
     float true_positive = 0;
+    float SSE = 0;
     for (int i = 0; i < int(predicted.size()); ++i)
     {
         if (predicted[i] == test.train_labels[i])
         {
             true_positive++;
         }
+        SSE += pow((predicted[0] - test.train_labels[0]), 2);
     }
     std::cout << "\nNeural Network Accuracy: " << true_positive / test.train_labels.size() * 100 << "%" << std::endl;
+    float MSE = SSE / test.train_labels.size();
+    std::cout << "Mean Squared Error (MSE): " << MSE << std::endl;
     if (predicted.size() == 1)
     {
         std::cout << std::setprecision(4) << std::fixed;
-        std::cout << "Hidden Layer Output - ";
-        for (auto output : h){
+        std::cout << "Hidden Layer Output - [ ";
+        for (auto output : h)
+        {
             std::cout << output << " ";
         }
-        float MSE = pow((predicted[0] - test.train_labels[0]), 2);
-        std::cout << "\nMean Squared Error (MSE): " << MSE << std::endl;
+        std::cout << "]" << std::endl;
     }
     else
     {
-        std::cout << std::endl << std::endl;
+        std::cout << std::endl
+                  << std::endl;
     }
 }
