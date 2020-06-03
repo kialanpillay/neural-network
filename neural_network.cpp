@@ -224,7 +224,7 @@ void NeuralNetwork::evaluate(void)
         {
             true_positive++;
         }
-        SSE += pow((predicted[0] - test.train_labels[0]), 2);
+        SSE += pow((predicted[i] - test.train_labels[i]), 2);
     }
     std::cout << "\nNeural Network Accuracy: " << true_positive / test.train_labels.size() * 100 << "%" << std::endl;
     float MSE = SSE / test.train_labels.size();
