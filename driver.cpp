@@ -34,6 +34,6 @@ int main(int argc, char *argv[])
     NeuralNetwork nn_mse(test, learning_rate, layers, bias, weight_matrix);
     
     nn_mse.evaluate();
-    nn_xor.structure();
+    nn_mse.structure();
     return 0;
 }

@@ -240,15 +240,14 @@ void NeuralNetwork::evaluate(void)
         }
         std::cout << "]" << std::endl;
     }
-    else
-    {
-        std::cout << "=====================================" << std::endl << std::endl;
-    }
+    std::cout << std::endl;
+    
 }
 
 void NeuralNetwork::structure(){
     std::cout << "Neural Network Structure" << std::endl;
-    std::cout << "Input Nodes: " << test.train_input[0].x.size() << std::endl;
-    std::cout << "Hidden Layer Nodes (Layer 2): " << model[0].layer.size() << std::endl;
-    std::cout << "Hidden Layer Nodes (Layer 2): " << model[1].layer.size() << std::endl;
+    std::cout << "Input Layer Nodes:  " << test.train_input[0].x.size() << std::endl;
+    std::cout << "Hidden Layer Nodes: " << model[0].layer.size() << std::endl;
+    std::cout << "Output Layer Nodes: " << model[1].layer.size() << std::endl;
+    std::cout << "=====================================" << std::endl << std::endl;
 }
