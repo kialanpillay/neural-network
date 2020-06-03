@@ -55,7 +55,6 @@ int step(float x, float threshold)
 void NeuralNetwork::fit(void)
 {
     std::vector<float> bias = {0, 1}; //Hidden Layer Bias
-    std::vector<float> labels;        //Hidden Layer Training Labels
     int c = 0;                        //Counter
     for (auto &perceptron : model[0].layer)
     {
