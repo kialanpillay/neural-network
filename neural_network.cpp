@@ -47,18 +47,22 @@ NeuralNetwork::NeuralNetwork(const Data &train, const Data &test, const float r,
     for (int i = 0; i < l; ++i)
     {
         Layer layer;
-        std::vector<float> weights = weight_matrix[c];
+        std::vector<float> weights;
         model.push_back(layer);
         if (i == l - 1)
         {
+            weights = weight_matrix[c];
             model[i].compose(Perceptron("step", weights)); //Output Layer
-            c++;
+
         }
         else
         {
-            model[i].compose(Perceptron("step", weights));
-            model[i].compose(Perceptron("step", weights)); //2-Node Hidden Layer
-            c += 2;
+
+            for (int j = 0; j < 2; ++j)
+            {
+                weights = weight_matrix[c++];
+                model[i].compose(Perceptron("step", weights));
+            }
         }
     }
 }
