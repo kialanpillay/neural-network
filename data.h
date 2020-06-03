@@ -1,17 +1,17 @@
-#ifndef TRAINING_H
-#define TRAINING_H
+#ifndef DATA_H
+#define DATA_H
 #include "input.h"
 #include <iostream>
 #include <vector>
 
 namespace PLLKIA010
 {
-    class Training
+    class Data
     {
     public:
         friend class NeuralNetwork;
-        Training(void);
-        Training(const std::vector<float> & labels, const std::vector<Input> & input);
+        Data(void);
+        Data(const std::vector<float> & labels, const std::vector<Input> & input);
 
     private:
         std::vector<float> train_labels; //m dimensional label (target) vector
