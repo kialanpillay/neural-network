@@ -53,26 +53,16 @@ int step(float x, float threshold)
 
 void NeuralNetwork::fit(void)
 {
-    std::vector<float> bias = {0, 1};
-    std::vector<float> labels; //Hidden Layer Training Labels
-    int c = 0;
+    std::vector<float> bias = {0, 1}; //Hidden Layer Bias
+    std::vector<float> labels;        //Hidden Layer Training Labels
+    int c = 0;                        //Counter
     for (auto &perceptron : model[0].layer)
     {
-        if (c == 0)
-        {
-            labels = {0, 1, 1, 1}; // Training Input for 1st Perceptron (OR Gate)
-        }
-        if (c == 1)
-        {
-            labels = {1, 1, 1, 0}; // Training Input for 2nd Perceptron (NAND Gate)
-        }
         for (int k = 0; k < 10; ++k)
         {
-
-            for (int m = 0; m < int(train.train_input.size()); ++m)
+            for (int m = (c * 4); m < ((c * 4) + 4); ++m)
             {
                 std::vector<float> x = train.train_input[m].x;
-
                 std::vector<float> linear;
                 std::transform(perceptron.weights.begin(), perceptron.weights.end(),
                                x.begin(), std::back_inserter(linear),
@@ -82,7 +72,7 @@ void NeuralNetwork::fit(void)
                 {
                     perceptron.output = step(sum, 0);
                 }
-                float t = labels[m];
+                float t = train.train_labels[m];
                 float o = perceptron.output;
                 float rate = learning_rate;
 
@@ -98,7 +88,7 @@ void NeuralNetwork::fit(void)
 
     for (int k = 0; k < 10; ++k)
     {
-        for (int m = 0; m < int(train.train_input.size()); ++m)
+        for (int m = (c * 4); m < ((c * 4) + 4); ++m)
         {
             std::vector<float> x = train.train_input[m].x;
             std::vector<float> h; //Output of Hidden Layer
@@ -141,7 +131,7 @@ void NeuralNetwork::fit(void)
 
 void NeuralNetwork::evaluate(void)
 {
-    std::vector<float> bias = {0, 1};
+    std::vector<float> bias = {0, 1}; //Hidden Layer Bias
     std::vector<float> predicted;
 
     for (int i = 0; i < int(test.train_input.size()); ++i)
