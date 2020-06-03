@@ -94,25 +94,19 @@ void NeuralNetwork::evaluate(void)
                        test.train_input[i].x.begin(), std::back_inserter(linear),
                        std::multiplies<float>());
         float sum = std::accumulate(linear.begin(), linear.end(), 0.0);
-        float prediction;
-        if (sum > 1.5)
-        {
-            prediction = 0;
-        }
-        else
-        {
-            prediction = 1;
-        }
-        std::cout << "Prediction: " << prediction << std::endl;
+        float prediction = step(sum, 1.5);
+        std::cout << "[" << test.train_input[i].x[0] << ", " << test.train_input[i].x[1] << "] - "
+                  << "Prediction: " << prediction << std::endl;
         predicted.push_back(prediction);
     }
     int true_positive = 0;
     for (int i = 0; i < int(predicted.size()); ++i)
     {
-        if(predicted[i] == test.train_labels[i]){
+        if (predicted[i] == test.train_labels[i])
+        {
             true_positive++;
         }
     }
 
-    std::cout << "Accuracy: " << true_positive/test.train_labels.size() * 100 << std::endl;
+    std::cout << "Accuracy: " << true_positive / test.train_labels.size() * 100 << "%" << std::endl;
 }
