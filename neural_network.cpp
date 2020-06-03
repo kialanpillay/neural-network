@@ -20,9 +20,10 @@ NeuralNetwork::NeuralNetwork(const Data &train, const Data &test, const float r,
         std::vector<float> weights;
         srand(static_cast<unsigned>(time(0)));
 
+        float r = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
         for (int w = 0; w < 2; ++w)
         {
-            float r = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+
             weights.push_back(r);
         }
 
@@ -52,23 +53,32 @@ int step(float x, float threshold)
 
 void NeuralNetwork::fit(void)
 {
-    for (int k = 0; k < 10; ++k)
+    std::vector<float> bias = {0, 1};
+    std::vector<float> threshold = {0, 0};
+    int c = 0;
+    for (auto &perceptron : model[0].layer)
     {
-        //std::cout << "Iteration " << (k + 1) << std::endl;
-        for (int m = 0; m < train.train_input.size(); ++m)
+        //std::cout << "Perceptron " << (c + 1) << std::endl;
+        if (c == 1)
         {
-            std::vector<float> x = train.train_input[m].x;
-            for (auto &perceptron : model[0].layer)
+            train.train_labels = {1, 1, 1, 0};
+        }
+        for (int k = 0; k < 10; ++k)
+        {
+            //std::cout << "Iteration " << (k + 1) << std::endl;
+
+            for (int m = 0; m < train.train_input.size(); ++m)
             {
+                std::vector<float> x = train.train_input[m].x;
+
                 std::vector<float> linear;
                 std::transform(perceptron.weights.begin(), perceptron.weights.end(),
                                x.begin(), std::back_inserter(linear),
                                std::multiplies<float>());
-                float sum = std::accumulate(linear.begin(), linear.end(), 0.0);
-
+                float sum = bias[c] + std::accumulate(linear.begin(), linear.end(), 0.0);
                 if (perceptron.activation == "step")
                 {
-                    perceptron.output = step(sum, 1.5);
+                    perceptron.output = step(sum, threshold[c]);
                 }
                 float t = train.train_labels[m];
                 float o = perceptron.output;
@@ -81,27 +91,37 @@ void NeuralNetwork::fit(void)
                                std::plus<float>());
             }
         }
+        c++;
+    }
+    for (auto &perceptron : model[0].layer)
+    {
+        for (auto w : perceptron.weights)
+        {
+            std::cout << w << " ";
+        }
+        std::cout << std::endl;
     }
 }
 
 void NeuralNetwork::evaluate(void)
 {
+    std::vector<float> bias = {0.5, 1};
     std::vector<float> predicted;
+
     for (int i = 0; i < int(test.train_input.size()); ++i)
     {
-        for (auto &perceptron : model[0].layer)
-        {
-            std::vector<float> linear;
-            std::transform(perceptron.weights.begin(), perceptron.weights.end(),
-                           test.train_input[i].x.begin(), std::back_inserter(linear),
-                           std::multiplies<float>());
-            float sum = std::accumulate(linear.begin(), linear.end(), 0.0);
-            float prediction = step(sum, 1.5);
-            std::cout << "[" << test.train_input[i].x[0] << ", " << test.train_input[i].x[1] << "] - "
-                      << "Prediction: " << prediction << std::endl;
-            predicted.push_back(prediction);
-        }
+
+        std::vector<float> linear;
+        std::transform(model[1].layer[0].weights.begin(), model[1].layer[0].weights.end(),
+                       test.train_input[i].x.begin(), std::back_inserter(linear),
+                       std::multiplies<float>());
+        float sum = bias[0] + std::accumulate(linear.begin(), linear.end(), 0.0);
+        float prediction = step(sum, 0.5);
+        std::cout << "[" << test.train_input[i].x[0] << ", " << test.train_input[i].x[1] << "] - "
+                  << "Prediction: " << prediction << std::endl;
+        predicted.push_back(prediction);
     }
+
     int true_positive = 0;
     for (int i = 0; i < int(predicted.size()); ++i)
     {
