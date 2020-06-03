@@ -4,7 +4,8 @@
 The purpose of the Makefile is to automatically compile and link the C++ source files into a binary executable that can be run locally. Run these commands in sequence to interact with the program.
 ```make``` will compile the files into an executable called ```driver```
 
-```make run``` will run the executable and write the Neural Network prediction results to the file ```output.txt```.
+```make run``` will run the executable and write the Neural Network prediction results to the console.
+Answers to the assignment questions are contained in the ```results.txt``` file.
 
 ## neural_network.h
 
