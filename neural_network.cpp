@@ -249,5 +249,6 @@ void NeuralNetwork::structure(){
     std::cout << "Input Layer Nodes:  " << test.train_input[0].x.size() << std::endl;
     std::cout << "Hidden Layer Nodes: " << model[0].layer.size() << std::endl;
     std::cout << "Output Layer Nodes: " << model[1].layer.size() << std::endl;
+    std::cout << "Fully Connected Nodes"<< std::endl;
     std::cout << "=====================================" << std::endl << std::endl;
 }
