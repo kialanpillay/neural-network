@@ -152,7 +152,7 @@ void NeuralNetwork::fit(void)
             float sum = bias[c] + std::accumulate(linear.begin(), linear.end(), 0.0);
             if (model[1].layer[0].activation == "step")
             {
-                model[1].layer[0].output = step(sum, 1);
+                model[1].layer[0].output = step(sum, 0);
             }
             float t = train.train_labels[m];
             float o = model[1].layer[0].output;
@@ -202,7 +202,7 @@ void NeuralNetwork::evaluate(void)
         float sum = bias[c] + std::accumulate(linear.begin(), linear.end(), 0.0);
         if (model[1].layer[0].activation == "step")
         {
-            model[1].layer[0].output = step(sum, 1);
+            model[1].layer[0].output = step(sum, 0);
         }
         else if (model[1].layer[0].activation == "sigmoid")
         {

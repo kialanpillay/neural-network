@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     Data train_xor(training_labels, training_input);
     Data test_xor(test_labels, test_input);
     float learning_rate = 0.1;
-    vector<float> bias = {0, 1, 0};
+    vector<float> bias = {0, 1, -1};
     int layers = 2;
     NeuralNetwork nn_xor(train_xor, test_xor, learning_rate, layers, bias);
     nn_xor.fit();
