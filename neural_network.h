@@ -1,6 +1,7 @@
 #ifndef NEURAL_NETWORK_H
 #define NEURAL_NETWORK_H
 #include "perceptron.h"
+#include "layer.h"
 #include "data.h"
 #include "input.h"
 #include <iostream>
@@ -21,7 +22,7 @@ namespace PLLKIA010
         Data test;
         float learning_rate;
         int layers;
-        std::vector<std::vector<Perceptron>> model;
+        std::vector<Layer> model;
 
     };
     std::ostream &operator<<(std::ostream &os, const NeuralNetwork &nn);

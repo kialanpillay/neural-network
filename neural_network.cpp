@@ -15,7 +15,7 @@ NeuralNetwork::NeuralNetwork(const Data &train, const Data &test, const float r,
 
     for (int i = 0; i < l; ++i)
     {
-        std::vector<Perceptron> layer;
+        Layer layer;
         model.push_back(layer);
         std::vector<float> weights;
         srand(static_cast<unsigned>(time(0)));
@@ -28,12 +28,12 @@ NeuralNetwork::NeuralNetwork(const Data &train, const Data &test, const float r,
 
         if (i == l - 1)
         {
-            model[i].push_back(Perceptron("step", weights)); //Output Layer
+            model[i].compose(Perceptron("step", weights)); //Output Layer
         }
         else
         {
-            model[i].push_back(Perceptron("step", weights));
-            model[i].push_back(Perceptron("step", weights)); //2-Node Hidden Layer
+            model[i].compose(Perceptron("step", weights));
+            model[i].compose(Perceptron("step", weights)); //2-Node Hidden Layer
         }
     }
 }
@@ -58,7 +58,7 @@ void NeuralNetwork::fit(void)
         for (int m = 0; m < train.train_input.size(); ++m)
         {
             std::vector<float> x = train.train_input[m].x;
-            for (auto &perceptron : model[0])
+            for (auto &perceptron : model[0].layer)
             {
                 std::vector<float> linear;
                 std::transform(perceptron.weights.begin(), perceptron.weights.end(),
@@ -89,15 +89,18 @@ void NeuralNetwork::evaluate(void)
     std::vector<float> predicted;
     for (int i = 0; i < int(test.train_input.size()); ++i)
     {
-        std::vector<float> linear;
-        std::transform(model[0][0].weights.begin(), model[0][0].weights.end(),
-                       test.train_input[i].x.begin(), std::back_inserter(linear),
-                       std::multiplies<float>());
-        float sum = std::accumulate(linear.begin(), linear.end(), 0.0);
-        float prediction = step(sum, 1.5);
-        std::cout << "[" << test.train_input[i].x[0] << ", " << test.train_input[i].x[1] << "] - "
-                  << "Prediction: " << prediction << std::endl;
-        predicted.push_back(prediction);
+        for (auto &perceptron : model[0].layer)
+        {
+            std::vector<float> linear;
+            std::transform(perceptron.weights.begin(), perceptron.weights.end(),
+                           test.train_input[i].x.begin(), std::back_inserter(linear),
+                           std::multiplies<float>());
+            float sum = std::accumulate(linear.begin(), linear.end(), 0.0);
+            float prediction = step(sum, 1.5);
+            std::cout << "[" << test.train_input[i].x[0] << ", " << test.train_input[i].x[1] << "] - "
+                      << "Prediction: " << prediction << std::endl;
+            predicted.push_back(prediction);
+        }
     }
     int true_positive = 0;
     for (int i = 0; i < int(predicted.size()); ++i)
