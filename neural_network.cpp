@@ -13,15 +13,14 @@ NeuralNetwork::NeuralNetwork(void) {}
 
 NeuralNetwork::NeuralNetwork(const Data &train, const Data &test, const float r, const int l) : train(train), test(test), learning_rate(r), layers(l)
 {
-
+    srand(unsigned(time(0)));
     for (int i = 0; i < l; ++i)
     {
         Layer layer;
         model.push_back(layer);
         std::vector<float> weights;
-        srand(static_cast<unsigned>(time(0)));
-
-        float r = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+        
+        float r = float(rand()) / float(RAND_MAX);
         for (int w = 0; w < 2; ++w)
         {
 
@@ -127,6 +126,21 @@ void NeuralNetwork::fit(void)
                            std::plus<float>());
         }
     }
+    for (auto w : model[0].layer[0].weights)
+    {
+        std::cout << w << " ";
+    }
+    std::cout << "\n";
+    for (auto w : model[0].layer[1].weights)
+    {
+        std::cout << w << " ";
+    }
+    std::cout << "\n";
+    for (auto w : model[1].layer[0].weights)
+    {
+        std::cout << w << " ";
+    }
+    std::cout << "\n";
 }
 
 void NeuralNetwork::evaluate(void)
