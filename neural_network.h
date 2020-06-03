@@ -17,6 +17,7 @@ namespace PLLKIA010
         NeuralNetwork(const Data &test, const float learning_rate, const int layers, const std::vector<float> &bias, const std::vector<std::vector<float>> &weight_matrix);
         void fit();
         void evaluate();
+        void structure();
 
     private:
         Data train;

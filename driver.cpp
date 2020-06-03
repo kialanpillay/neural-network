@@ -21,8 +21,10 @@ int main(int argc, char *argv[])
     vector<float> bias = {0, 1, -1};
     int layers = 2;
     NeuralNetwork nn_xor(train_xor, test_xor, learning_rate, layers, bias);
+    
     nn_xor.fit();
     nn_xor.evaluate();
+    nn_xor.structure();
 
     test_labels = {0.36};
     test_input = {Input({1.3, 2.7, 0.8})};
@@ -30,6 +32,8 @@ int main(int argc, char *argv[])
     bias = {0.1, -0.3, -0.3};
     vector<vector<float>> weight_matrix = {{0.1, 0.2, 0.5}, {-0.4, 1.0, -0.6}, {0.8, 1.0}};
     NeuralNetwork nn_mse(test, learning_rate, layers, bias, weight_matrix);
+    
     nn_mse.evaluate();
+    nn_xor.structure();
     return 0;
 }

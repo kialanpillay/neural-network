@@ -15,7 +15,7 @@ NeuralNetwork::NeuralNetwork(void) {}
 NeuralNetwork::NeuralNetwork(const Data &train, const Data &test, const float r, const int l, const std::vector<float> &b) : train(train), test(test), learning_rate(r), layers(l), bias(b)
 {
     srand(unsigned(time(0)));
-    for (int i = 0; i < l; ++i)
+    for (int i = 0; i < layers; ++i)
     {
         Layer layer;
         model.push_back(layer);
@@ -28,7 +28,7 @@ NeuralNetwork::NeuralNetwork(const Data &train, const Data &test, const float r,
             weights.push_back(r);
         }
 
-        if (i == l - 1)
+        if (i == layers - 1)
         {
             model[i].compose(Perceptron("step", weights)); //Output Layer
         }
@@ -244,4 +244,11 @@ void NeuralNetwork::evaluate(void)
     {
         std::cout << "=====================================" << std::endl << std::endl;
     }
+}
+
+void NeuralNetwork::structure(){
+    std::cout << "Neural Network Structure" << std::endl;
+    std::cout << "Input Nodes: " << test.train_input[0].x.size() << std::endl;
+    std::cout << "Hidden Layer Nodes (Layer 2): " << model[0].layer.size() << std::endl;
+    std::cout << "Hidden Layer Nodes (Layer 2): " << model[1].layer.size() << std::endl;
 }
