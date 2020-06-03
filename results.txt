@@ -1,0 +1,49 @@
+ML Assignment 7: ANN
+================================
+Kialan Pillay: PLLKIA010
+================================
+
+PART I
+----------
+Question 1
+----------
+
+Input Layer  - 2 Nodes
+Hidden Layer - 2 Nodes
+Output Layer - 1 Node
+
+3 Perceptrons Minumum.
+XOR can be decomposed into AND(OR,NAND).
+Each Perceptron Functions as a Basic Logic Gate.
+Output Layer Perceptron - AND
+
+Question 2
+----------
+Training Examples (12)
+4 Per Basic Logic Gate
+[0,0] - Label: 0
+[0,1] - Label: 1
+[1,0] - Label: 1
+[1,1] - Label: 1
+[0,0] - Label: 1
+[0,1] - Label: 1
+[1,0] - Label: 1
+[1,1] - Label: 0
+[0,0] - Label: 0
+[0,1] - Label: 1
+[1,0] - Label: 1
+[1,1] - Label: 0
+
+PART II
+----------
+Question 3
+----------
+Hidden Layer Output - [ 0.7631 0.8022 ]
+
+Question 4
+----------
+Output Layer Neuron Output - 0.75
+
+Question 3
+----------
+Mean Squared Error: 0.15
