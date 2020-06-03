@@ -58,7 +58,6 @@ void NeuralNetwork::fit(void)
     int c = 0;
     for (auto &perceptron : model[0].layer)
     {
-        //std::cout << "Perceptron " << (c + 1) << std::endl;
         if (c == 0)
         {
             labels = {0, 1, 1, 1}; // Training Input for 1st Perceptron (OR Gate)
@@ -69,7 +68,6 @@ void NeuralNetwork::fit(void)
         }
         for (int k = 0; k < 10; ++k)
         {
-            //std::cout << "Iteration " << (k + 1) << std::endl;
 
             for (int m = 0; m < int(train.train_input.size()); ++m)
             {
@@ -98,7 +96,7 @@ void NeuralNetwork::fit(void)
         c++;
     }
 
-    for (int k = 0; k < 1; ++k)
+    for (int k = 0; k < 10; ++k)
     {
         for (int m = 0; m < int(train.train_input.size()); ++m)
         {
@@ -171,7 +169,6 @@ void NeuralNetwork::evaluate(void)
                        std::multiplies<float>());
         float sum = std::accumulate(linear.begin(), linear.end(), 0.0);
         float prediction = 0.0;
-        std::cout << sum << " ";
         if (model[1].layer[0].activation == "step")
         {
             prediction = step(sum, 1);
