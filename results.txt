@@ -7,7 +7,6 @@ PART I
 ----------
 Question 1
 ----------
-
 Input Layer  - 2 Nodes
 Hidden Layer - 2 Nodes
 Output Layer - 1 Node
