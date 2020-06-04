@@ -20,14 +20,18 @@ Question 2
 ----------
 Training Examples (12)
 4 Per Basic Logic Gate
+
+Hidden Layer Perceptron 1
 [0,0] - Label: 0
 [0,1] - Label: 1
 [1,0] - Label: 1
 [1,1] - Label: 1
+Hidden Layer Perceptron 2
 [0,0] - Label: 1
 [0,1] - Label: 1
 [1,0] - Label: 1
 [1,1] - Label: 0
+Output Layer Perceptron
 [0,0] - Label: 0
 [0,1] - Label: 1
 [1,0] - Label: 1
