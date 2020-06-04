@@ -86,6 +86,7 @@ float sigmoid(float x)
 void NeuralNetwork::fit(void)
 {
     int c = 0; //Counter
+    int l = 0;
     for (auto &perceptron : model[0].layer)
     {
         for (int k = 0; k < 10; ++k)
@@ -119,8 +120,9 @@ void NeuralNetwork::fit(void)
         }
         c++;
     }
+    l++;
 
-    if (layers == 2)
+    if (l == layers - 1)
     {
 
         for (int k = 0; k < 10; ++k)
@@ -130,7 +132,7 @@ void NeuralNetwork::fit(void)
                 std::vector<float> x = train.train_input[m].x;
                 std::vector<float> h; //Output of Hidden Layer
                 int c = 0;
-                for (auto &perceptron : model[0].layer)
+                for (auto &perceptron : model[l - 1].layer)
                 {
                     std::vector<float> linear;
                     std::transform(perceptron.weights.begin(), perceptron.weights.end(),
@@ -149,22 +151,22 @@ void NeuralNetwork::fit(void)
                     c++;
                 }
                 std::vector<float> linear;
-                std::transform(model[1].layer[0].weights.begin(), model[1].layer[0].weights.end(),
+                std::transform(model[l].layer[0].weights.begin(), model[l].layer[0].weights.end(),
                                h.begin(), std::back_inserter(linear),
                                std::multiplies<float>());
                 float sum = bias[c] + std::accumulate(linear.begin(), linear.end(), 0.0);
-                if (model[1].layer[0].activation == "step")
+                if (model[l].layer[0].activation == "step")
                 {
-                    model[1].layer[0].output = step(sum, 0);
+                    model[l].layer[0].output = step(sum, 0);
                 }
                 float t = train.train_labels[m];
-                float o = model[1].layer[0].output;
+                float o = model[l].layer[0].output;
                 float rate = learning_rate;
 
                 std::vector<float> delta;
                 std::transform(h.begin(), h.end(), std::back_inserter(delta), [rate, t, o](float x) { return rate * (t - o) * x; });
-                std::transform(model[1].layer[0].weights.begin(), model[1].layer[0].weights.end(),
-                               delta.begin(), model[1].layer[0].weights.begin(),
+                std::transform(model[l].layer[0].weights.begin(), model[l].layer[0].weights.end(),
+                               delta.begin(), model[l].layer[0].weights.begin(),
                                std::plus<float>());
             }
         }
@@ -178,12 +180,14 @@ void NeuralNetwork::evaluate(void)
     std::vector<float> predicted;
     std::vector<float> h; //Output of Hidden Layer
     int c = 0;
+    int l = 0;
     for (int i = 0; i < int(test.train_input.size()); ++i)
     {
         c = 0;
+        l = 0;
         std::vector<float> x = test.train_input[i].x;
         h.clear();
-        for (auto &perceptron : model[0].layer)
+        for (auto &perceptron : model[l].layer)
         {
             std::vector<float> linear;
             std::transform(perceptron.weights.begin(), perceptron.weights.end(),
@@ -201,22 +205,23 @@ void NeuralNetwork::evaluate(void)
             h.push_back(perceptron.output);
             c++;
         }
-        if (layers == 2)
+        l++;
+        if (l == layers - 1)
         {
             std::vector<float> linear;
-            std::transform(model[1].layer[0].weights.begin(), model[1].layer[0].weights.end(),
+            std::transform(model[l].layer[0].weights.begin(), model[l].layer[0].weights.end(),
                            h.begin(), std::back_inserter(linear),
                            std::multiplies<float>());
             float sum = bias[c] + std::accumulate(linear.begin(), linear.end(), 0.0);
-            if (model[1].layer[0].activation == "step")
+            if (model[l].layer[0].activation == "step")
             {
-                model[1].layer[0].output = step(sum, 0);
+                model[l].layer[0].output = step(sum, 0);
             }
-            else if (model[1].layer[0].activation == "sigmoid")
+            else if (model[l].layer[0].activation == "sigmoid")
             {
-                model[1].layer[0].output = sigmoid(sum);
+                model[l].layer[0].output = sigmoid(sum);
             }
-            float prediction = model[1].layer[0].output;
+            float prediction = model[l].layer[0].output;
             std::cout << std::setprecision(2) << std::fixed;
             std::cout << "[" << test.train_input[i].x[0] << ", " << test.train_input[i].x[1] << "] - "
                       << "Prediction: " << prediction << std::endl;
@@ -224,7 +229,7 @@ void NeuralNetwork::evaluate(void)
         }
         else
         {
-            float prediction = model[0].layer[0].output;
+            float prediction = h[0]; //Perceptron Output
             std::cout << std::setprecision(2) << std::fixed;
             std::cout << "[" << test.train_input[i].x[0] << ", " << test.train_input[i].x[1] << "] - "
                       << "Prediction: " << prediction << std::endl;
