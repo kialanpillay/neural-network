@@ -90,7 +90,7 @@ void NeuralNetwork::fit(void)
     {
         for (int k = 0; k < 10; ++k)
         {
-            for (int m = (c * 4); m < ((c * 4) + 4); ++m)
+            for (int m = (c * 4); m < ((c * 4) + 4); ++m) //Iterate through Training Examples
             {
                 std::vector<float> x = train.train_input[m].x;
                 std::vector<float> linear;

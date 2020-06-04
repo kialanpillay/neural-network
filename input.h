@@ -15,7 +15,7 @@ namespace PLLKIA010
         Input(const std::vector<float> &input);
 
     private:
-        std::vector<float> x; //n-dimensional input vector (input nodes)
+        std::vector<float> x; //n-Dimensional Input Vector (Input Nodes)
     };
 } // namespace PLLKIA010
 

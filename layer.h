@@ -14,7 +14,7 @@ namespace PLLKIA010
         void compose(const Perceptron & perceptron);
 
     private:
-        std::vector<Perceptron> layer; //n-dimensional input vector (input nodes)
+        std::vector<Perceptron> layer; //Layer of Perceptrons
     };
 } // namespace PLLKIA010
 

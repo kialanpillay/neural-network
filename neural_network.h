@@ -27,7 +27,6 @@ namespace PLLKIA010
         std::vector<Layer> model;
         std::vector<float> bias;
     };
-    std::ostream &operator<<(std::ostream &os, const NeuralNetwork &nn);
 } // namespace PLLKIA010
 
 #endif
