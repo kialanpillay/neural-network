@@ -4,7 +4,6 @@
 #include "layer.h"
 #include "data.h"
 #include "input.h"
-#include <iostream>
 #include <vector>
 
 namespace PLLKIA010

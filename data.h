@@ -1,7 +1,6 @@
 #ifndef DATA_H
 #define DATA_H
 #include "input.h"
-#include <iostream>
 #include <vector>
 
 namespace PLLKIA010

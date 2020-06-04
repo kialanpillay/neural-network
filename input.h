@@ -1,7 +1,5 @@
 #ifndef INPUT_H
 #define INPUT_H
-#include <iostream>
-#include <string>
 #include <vector>
 
 namespace PLLKIA010
@@ -10,7 +8,6 @@ namespace PLLKIA010
     {
     public:
         friend class NeuralNetwork;
-        friend class Perceptron;
         Input(void);
         Input(const std::vector<float> &input);
 
