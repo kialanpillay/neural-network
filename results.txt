@@ -11,7 +11,7 @@ Input Layer  - 2 Nodes
 Hidden Layer - 2 Nodes
 Output Layer - 1 Node
 
-3 Perceptrons Minumum.
+3 Perceptrons Minumum - Fully Connected.
 XOR can be decomposed into AND(OR,NAND).
 Each Perceptron is a Basic Logic Gate.
 Output Layer Perceptron - AND
