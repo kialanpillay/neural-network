@@ -89,7 +89,7 @@ void NeuralNetwork::fit(void)
     int l = 0;
     for (auto &perceptron : model[0].layer)
     {
-        for (int k = 0; k < 10; ++k)
+        for (int k = 0; k < 20; ++k)
         {
             for (int m = (c * 4); m < ((c * 4) + 4); ++m) //Iterate through Training Examples
             {
@@ -125,7 +125,7 @@ void NeuralNetwork::fit(void)
     if (l == layers - 1)
     {
 
-        for (int k = 0; k < 10; ++k)
+        for (int k = 0; k < 20; ++k)
         {
             for (int m = (c * 4); m < ((c * 4) + 4); ++m)
             {
@@ -170,6 +170,9 @@ void NeuralNetwork::fit(void)
                                std::plus<float>());
             }
         }
+    }
+    for (auto w : model[0].layer[1].weights){
+        std::cout << w << " ";
     }
 }
 
