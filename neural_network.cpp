@@ -222,7 +222,8 @@ void NeuralNetwork::evaluate(void)
                       << "Prediction: " << prediction << std::endl;
             predicted.push_back(prediction);
         }
-        else{
+        else
+        {
             float prediction = model[0].layer[0].output;
             std::cout << std::setprecision(2) << std::fixed;
             std::cout << "[" << test.train_input[i].x[0] << ", " << test.train_input[i].x[1] << "] - "
@@ -262,8 +263,18 @@ void NeuralNetwork::structure()
 {
     std::cout << "Neural Network Structure" << std::endl;
     std::cout << "Input Layer Nodes:  " << test.train_input[0].x.size() << std::endl;
-    std::cout << "Hidden Layer Nodes: " << model[0].layer.size() << std::endl;
-    std::cout << "Output Layer Nodes: " << model[1].layer.size() << std::endl;
+    for (int l = 0; l < layers; ++l)
+    {
+        if (l == layers - 1)
+        {
+            std::cout << "Output Layer Nodes: " << model[1].layer.size() << std::endl;
+        }
+        else
+        {
+            std::cout << "Hidden Layer Nodes: " << model[0].layer.size() << std::endl;
+        }
+    }
+
     std::cout << "Fully Connected Nodes" << std::endl;
     std::cout << "=====================================" << std::endl
               << std::endl;
