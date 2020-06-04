@@ -267,11 +267,11 @@ void NeuralNetwork::structure()
     {
         if (l == layers - 1)
         {
-            std::cout << "Output Layer Nodes: " << model[1].layer.size() << std::endl;
+            std::cout << "Output Layer Nodes: " << model[l].layer.size() << std::endl;
         }
         else
         {
-            std::cout << "Hidden Layer Nodes: " << model[0].layer.size() << std::endl;
+            std::cout << "Hidden Layer Nodes: " << model[l].layer.size() << std::endl;
         }
     }
 
