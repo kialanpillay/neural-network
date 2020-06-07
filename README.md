@@ -9,7 +9,7 @@ Answers to the assignment questions are contained in the ```results.txt``` file.
 
 ## neural_network.h
 
-This is a header file that contains the ```NeuralNetwork``` Class declaration. This class provides the major functionality. The class consists of several member variables that store: the number of layers in the neural network (excluding input layer), the learning rate for the perceptron training rule, ```Data``` objects that hold test and training data respectively, and ```vector``` variables that contain the bias parameters for each perceptron and ```Layer``` objects (model). The class also has a default constructor and two different parameterised constructors. The class is designed in a fairly generic manner and can accommdate any number of hidden layers and neurons in each layer.
+This is a header file that contains the ```NeuralNetwork``` Class declaration. This class provides the major functionality. The class consists of several member variables that store: the number of layers in the neural network (excluding input layer), the learning rate for the perceptron training rule, ```Data``` objects that hold test and training data respectively, and ```vector``` variables that contain the bias parameters for each neuron and ```Layer``` objects (model). The class also has a default constructor and two different parameterised constructors. The class is designed in a fairly generic manner and can accommdate any number of hidden layers and neurons in each layer.
 
 
 ## neural_network.cpp
@@ -18,33 +18,33 @@ This file is the actual implementation of the methods declared in the ```neural_
 
 **Default Constructor**: Initialises an empty ```NeuralNetwork``` object.
 
-**Constructor A**: Initialises a ```NeuralNetwork``` object, with test and training ```Data```, the learning rate and network layers, and a bias ```vector```. The constructor body creates ```Layer``` objects, which contain ```Perceptron``` objects with randomly generated weights between 0 and 1, and adds each ```Layer``` to the ```NeuralNetwork``` model variable. This constructor is used when weights have not been pre-learnt, and the model needs to train on the given training data.
+**Constructor A**: Initialises a ```NeuralNetwork``` object, with test and training ```Data```, the learning rate and network layers, and a bias ```vector```. The constructor body creates ```Layer``` objects, which contain ```Neuron``` objects with randomly generated weights between 0 and 1, and adds each ```Layer``` to the ```NeuralNetwork``` model variable. This constructor is used when weights have not been pre-learnt, and the model needs to train on the given training data.
 
-**Constructor B**: Initialises a ```NeuralNetwork``` object, with only test ```Data```, the learning rate and network layers, a bias ```vector```, and a 2D ```vector``` for the weight matrix. The constructor body creates ```Layer``` objects, which contain ```Perceptron``` objects that are constructed with the pre-defined weights, and adds each ```Layer``` to the ```NeuralNetwork``` model variable. This constructor is used when weights have been pre-learnt, and the model just needs to evaluate test data.
+**Constructor B**: Initialises a ```NeuralNetwork``` object, with only test ```Data```, the learning rate and network layers, a bias ```vector```, and a 2D ```vector``` for the weight matrix. The constructor body creates ```Layer``` objects, which contain ```Neuron``` objects that are constructed with the pre-defined weights, and adds each ```Layer``` to the ```NeuralNetwork``` model variable. This constructor is used when weights have been pre-learnt, and the model just needs to evaluate test data.
 
-**fit**: This method uses the Perceptron Training Rule to train the connection weights for each node in the network. The XOR problem requires a hidden layer of 2 nodes, and a single node in the output layer, although a generic network can be defined. This structure is informed by the decomposition of XOR into AND(OR,NAND), and each perceptron represents a single basic logic gate. The method iterates over each perceptron in the hidden layer, and for a fixed number of iterations (20), updates the weights according to the learning rule for each relevant training example. The neuron input is passed to the relevant activation function which is determined by the ```Perceptron``` object member. Once these neurons are trained, the output is propagated to the output node, and the weights for this node are learnt using the same procedure.
+**fit**: This method uses the Perceptron Training Rule to train the connection weights for each node in the network. The XOR problem requires a hidden layer of 2 nodes, and a single node in the output layer, although a generic network can be defined. This structure is informed by the decomposition of XOR into AND(OR,NAND), and each perceptron represents a single basic logic gate. The method iterates over each neuron in the hidden layer, and for a fixed number of iterations (20), updates the weights according to the learning rule for each relevant training example. The neuron input is passed to the relevant activation function which is determined by the ```Neuron``` object member. Once these neurons are trained, the output is propagated to the output node, and the weights for this node are learnt using the same procedure.
 
 **evaluate** This method evaluates a set of labelled test data once the network has been trained. For each test example, the input is propagated through the network to produce an output. This output is compared against the label to produce an accuracy score for the neural network and to compute the MSE metric. The method shares some of its implementation with the above method concerning output and intermediate value computation, although of course, does not update any connection weights. The Test Data, Prediction, Accuracy and MSE score are written to console. 
 
 **structure** This method writes the structure of the neural network to the console. The size of each hidden output layer is given by the dimensions of the model member variable and ascertains the size of the input layer from an element in the test ```Data``` class ```vector``` of ```Input``` objects.
 
 
-## perceptron.h
+## neuron.h
 
-This is a header file that contains the ```Perceptron``` Class declaration. The perceptron is the computational unit in the neural network. The class contains member variables that store the activation function for the particular perceptron, a ```vector``` of weights, which are the values of the incoming neuron connections, a ```Input``` object that represents the neuron input, and the output of the perceptron. This class only consists of Constructors. The class friends ```NeuralNetwork``` since they are tightly coupled and to allow for efficient code.
+This is a header file that contains the ```Neuron``` Class declaration. The neuron is the computational unit in the neural network. The class contains member variables that store the activation function for the particular neuron, a ```vector``` of weights, which are the values of the incoming neuron connections, a ```Input``` object that represents the neuron input, and the output of the perceptron. This class only consists of Constructors. The class friends ```NeuralNetwork``` since they are tightly coupled and to allow for efficient code.
 
 
-## perceptron.cpp
+## neuron.cpp
 
-This file is the actual implementation of the methods declared in the ```perceptron.h``` file. The implementation of the methods is explained below. 
+This file is the actual implementation of the methods declared in the ```neuron.h``` file. The implementation of the methods is explained below. 
 
-**Default Constructor**: Initialises an empty ```Perceptron``` object.
+**Default Constructor**: Initialises an empty ```Neuron``` object.
 
-**Constructor**: Initialises a ```Perceptron``` object, with the specified activation function (stored as a ```string```), and a ```vector``` of the weights.
+**Constructor**: Initialises a ```Neuron``` object, with the specified activation function (stored as a ```string```), and a ```vector``` of the weights.
 
 ## layer.h
 
-This is a header file that contains the ```Layer``` Class declaration. The class consists solely of a ```vector``` of the ```Perceptron``` objects, and functions as a wrapper class for a model layer. It also contains a method to compose (build) a layer with perceptrons.
+This is a header file that contains the ```Layer``` Class declaration. The class consists solely of a ```vector``` of the ```Neuron``` objects, and functions as a wrapper class for a model layer. It also contains a method to compose (build) a layer with perceptrons.
 
 ## layer.cpp
 
@@ -52,7 +52,7 @@ This file is the actual implementation of the methods declared in the ```layer.h
 
 **Default Constructor**: Initialises an empty ```Layer``` object. Used when constructing a ```NeuralNetwork``` object
 
-**Constructor**: Initialises a ```Layer``` object, with a ```vector``` of ```Perceptron``` objects.
+**Constructor**: Initialises a ```Layer``` object, with a ```vector``` of ```Neuron``` objects.
 
 ## data.h
 

@@ -1,6 +1,6 @@
 #ifndef LAYER_H
 #define LAYER_H
-#include "perceptron.h"
+#include "neuron.h"
 #include <vector>
 
 namespace PLLKIA010
@@ -10,11 +10,11 @@ namespace PLLKIA010
     public:
         friend class NeuralNetwork;
         Layer(void);
-        Layer(const std::vector<Perceptron> & layer);
-        void compose(const Perceptron & perceptron);
+        Layer(const std::vector<Neuron> & layer);
+        void compose(const Neuron & neuron);
 
     private:
-        std::vector<Perceptron> layer; //Layer of Perceptrons
+        std::vector<Neuron> layer; //Layer of Neurons
     };
 } // namespace PLLKIA010
 

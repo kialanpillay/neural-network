@@ -1,6 +1,5 @@
 #include "neural_network.h"
 #include "data.h"
-#include "perceptron.h"
 #include "input.h"
 #include <iostream>
 #include <fstream>

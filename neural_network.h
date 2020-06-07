@@ -1,6 +1,6 @@
 #ifndef NEURAL_NETWORK_H
 #define NEURAL_NETWORK_H
-#include "perceptron.h"
+#include "neuron.h"
 #include "layer.h"
 #include "data.h"
 #include "input.h"

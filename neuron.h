@@ -1,17 +1,17 @@
-#ifndef PERCEPTRON_H
-#define PERCEPTRON_H
+#ifndef NEURON_H
+#define NEURON_H
 #include "input.h"
 #include <string>
 #include <vector>
 
 namespace PLLKIA010
 {
-    class Perceptron
+    class Neuron
     {
     public:
         friend class NeuralNetwork;
-        Perceptron(void);
-        Perceptron(std::string activation, std::vector<float> & weights);
+        Neuron(void);
+        Neuron(std::string activation, std::vector<float> & weights);
 
     private:
         std::string activation;

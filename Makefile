@@ -1,8 +1,8 @@
 CC=g++         
 CCFLAGS= -std=c++11 -Wall -g -fsanitize=address -fno-omit-frame-pointer
 
-driver: driver.o neural_network.o layer.o data.o perceptron.o input.o
-	$(CC) $(CCFLAGS) driver.o neural_network.o layer.o data.o perceptron.o input.o -o driver
+driver: driver.o neural_network.o layer.o data.o neuron.o input.o
+	$(CC) $(CCFLAGS) driver.o neural_network.o layer.o data.o neuron.o input.o -o driver
 
 driver.o: driver.cpp
 	$(CC) $(CCFLAGS) -c driver.cpp	
@@ -19,8 +19,8 @@ data.o: data.cpp data.h
 input.o: input.cpp input.h
 	$(CC) $(CCFLAGS) -c input.cpp
 
-perceptron.o: perceptron.cpp perceptron.h
-	$(CC) $(CCFLAGS) -c perceptron.cpp
+neuron.o: neuron.cpp neuron.h
+	$(CC) $(CCFLAGS) -c neuron.cpp
 
 
 clean:

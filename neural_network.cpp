@@ -30,12 +30,12 @@ NeuralNetwork::NeuralNetwork(const Data &train, const Data &test, const float r,
 
         if (i == layers - 1)
         {
-            model[i].compose(Perceptron("step", weights)); //Output Layer
+            model[i].compose(Neuron("step", weights)); //Output Layer
         }
         else
         {
-            model[i].compose(Perceptron("step", weights));
-            model[i].compose(Perceptron("step", weights)); //2-Node Hidden Layer
+            model[i].compose(Neuron("step", weights));
+            model[i].compose(Neuron("step", weights)); //2-Node Hidden Layer
         }
     }
 }
@@ -52,7 +52,7 @@ NeuralNetwork::NeuralNetwork(const Data &test, const float r, const int l, const
         if (i == l - 1)
         {
             weights = weight_matrix[c];
-            model[i].compose(Perceptron("sigmoid", weights)); //Output Layer
+            model[i].compose(Neuron("sigmoid", weights)); //Output Layer
         }
         else
         {
@@ -60,7 +60,7 @@ NeuralNetwork::NeuralNetwork(const Data &test, const float r, const int l, const
             for (int j = 0; j < 2; ++j)
             {
                 weights = weight_matrix[c++];
-                model[i].compose(Perceptron("sigmoid", weights));
+                model[i].compose(Neuron("sigmoid", weights));
             }
         }
     }
