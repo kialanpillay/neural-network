@@ -13,8 +13,8 @@ namespace PLLKIA010
         Data(const std::vector<float> & labels, const std::vector<Input> & input);
 
     private:
-        std::vector<float> train_labels; //m-Dimensional Label (Target) Vector
-        std::vector<Input> train_input; //m-Dimensional Input Vector (M x N)
+        std::vector<float> labels; //m-Dimensional Label (Target) Vector
+        std::vector<Input> input; //m-Dimensional Input Vector (M x N)
     };
 } // namespace PLLKIA010
 

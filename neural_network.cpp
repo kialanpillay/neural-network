@@ -93,7 +93,7 @@ void NeuralNetwork::fit(void)
         {
             for (int m = (c * 4); m < ((c * 4) + 4); ++m) //Iterate through Training Examples
             {
-                std::vector<float> x = train.train_input[m].x;
+                std::vector<float> x = train.input[m].x;
                 std::vector<float> linear;
                 std::transform(perceptron.weights.begin(), perceptron.weights.end(),
                                x.begin(), std::back_inserter(linear),
@@ -107,7 +107,7 @@ void NeuralNetwork::fit(void)
                 {
                     perceptron.output = sigmoid(sum);
                 }
-                float t = train.train_labels[m];
+                float t = train.labels[m];
                 float o = perceptron.output;
                 float rate = learning_rate;
 
@@ -129,7 +129,7 @@ void NeuralNetwork::fit(void)
         {
             for (int m = (c * 4); m < ((c * 4) + 4); ++m)
             {
-                std::vector<float> x = train.train_input[m].x;
+                std::vector<float> x = train.input[m].x;
                 std::vector<float> h; //Output of Hidden Layer
                 int c = 0;
                 for (auto &perceptron : model[l - 1].layer)
@@ -159,7 +159,7 @@ void NeuralNetwork::fit(void)
                 {
                     model[l].layer[0].output = step(sum, 0);
                 }
-                float t = train.train_labels[m];
+                float t = train.labels[m];
                 float o = model[l].layer[0].output;
                 float rate = learning_rate;
 
@@ -181,11 +181,11 @@ void NeuralNetwork::evaluate(void)
     std::vector<float> h; //Output of Hidden Layer
     int c = 0;
     int l = 0;
-    for (int i = 0; i < int(test.train_input.size()); ++i)
+    for (int i = 0; i < int(test.input.size()); ++i)
     {
         c = 0;
         l = 0;
-        std::vector<float> x = test.train_input[i].x;
+        std::vector<float> x = test.input[i].x;
         h.clear();
         for (auto &perceptron : model[l].layer)
         {
@@ -223,7 +223,7 @@ void NeuralNetwork::evaluate(void)
             }
             float prediction = model[l].layer[0].output;
             std::cout << std::setprecision(2) << std::fixed;
-            std::cout << "[" << test.train_input[i].x[0] << ", " << test.train_input[i].x[1] << "] - "
+            std::cout << "[" << test.input[i].x[0] << ", " << test.input[i].x[1] << "] - "
                       << "Prediction: " << prediction << std::endl;
             predicted.push_back(prediction);
         }
@@ -231,7 +231,7 @@ void NeuralNetwork::evaluate(void)
         {
             float prediction = h[0]; //Perceptron Output
             std::cout << std::setprecision(2) << std::fixed;
-            std::cout << "[" << test.train_input[i].x[0] << ", " << test.train_input[i].x[1] << "] - "
+            std::cout << "[" << test.input[i].x[0] << ", " << test.input[i].x[1] << "] - "
                       << "Prediction: " << prediction << std::endl;
             predicted.push_back(prediction);
         }
@@ -241,15 +241,15 @@ void NeuralNetwork::evaluate(void)
     float SSE = 0;
     for (int i = 0; i < int(predicted.size()); ++i)
     {
-        if (predicted[i] == test.train_labels[i])
+        if (predicted[i] == test.labels[i])
         {
             true_positive++;
         }
-        SSE += pow((predicted[i] - test.train_labels[i]), 2);
+        SSE += pow((predicted[i] - test.labels[i]), 2);
     }
     std::cout << std::endl
-              << "Neural Network Accuracy: " << true_positive / test.train_labels.size() * 100 << "%" << std::endl;
-    float MSE = SSE / test.train_labels.size();
+              << "Neural Network Accuracy: " << true_positive / test.labels.size() * 100 << "%" << std::endl;
+    float MSE = SSE / test.labels.size();
     std::cout << "Mean Squared Error (MSE): " << MSE << std::endl;
     if (predicted.size() == 1)
     {
@@ -267,7 +267,7 @@ void NeuralNetwork::evaluate(void)
 void NeuralNetwork::structure()
 {
     std::cout << "Neural Network Structure" << std::endl;
-    std::cout << "Input Layer Nodes:  " << test.train_input[0].x.size() << std::endl;
+    std::cout << "Input Layer Nodes:  " << test.input[0].x.size() << std::endl;
     for (int l = 0; l < layers; ++l)
     {
         if (l == layers - 1)
