@@ -16,6 +16,18 @@ XOR can be decomposed into AND(OR,NAND).
 Each Perceptron is a Basic Logic Gate.
 Output Layer Perceptron - AND
 
+Neural Network Evaluation - Test Data
+-------------------------------------
+[0.00, 0.00] - Prediction: 0.00
+[0.00, 1.00] - Prediction: 1.00
+[1.00, 0.00] - Prediction: 1.00
+[1.00, 1.00] - Prediction: 0.00
+[0.00, 1.10] - Prediction: 1.00
+[0.90, 0.10] - Prediction: 1.00
+
+Neural Network Accuracy: 100.00%
+Mean Squared Error (MSE): 0.00
+
 Question 2
 ----------
 Training Examples (12)
