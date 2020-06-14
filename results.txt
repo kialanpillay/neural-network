@@ -59,6 +59,6 @@ Question 4
 ----------
 Output Layer Neuron Output - 0.75
 
-Question 3
+Question 5
 ----------
 Mean Squared Error: 0.15
